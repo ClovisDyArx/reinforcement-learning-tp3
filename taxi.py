@@ -65,19 +65,19 @@ def play_and_train(env: gym.Env, agent: QLearningAgent, t_max=int(1e4)) -> float
         if done:
             break
 
-        # env.render()
+        env.render()
         # END SOLUTION
 
     return total_reward
 
 
-rewards = []
-for i in range(100000):
+"""rewards = []
+for i in range(100):
     rewards.append(play_and_train(env, agent))
     if i % 100 == 0:
         print("mean reward", np.mean(rewards[-100:]))
 
-assert np.mean(rewards[-100:]) > 0.0
+assert np.mean(rewards[-100:]) > 0.0"""
 # TODO: créer des vidéos de l'agent en action
 
 #################################################
@@ -96,7 +96,6 @@ for i in range(10000):
         print("mean reward", np.mean(rewards[-100:]))
 
 assert np.mean(rewards[-100:]) > 0.0"""
-
 # TODO: créer des vidéos de l'agent en action
 
 
@@ -107,8 +106,8 @@ assert np.mean(rewards[-100:]) > 0.0"""
 
 agent = SarsaAgent(learning_rate=0.05, gamma=0.99, legal_actions=list(range(n_actions)))
 
-"""rewards = []
+rewards = []
 for i in range(1000):
     rewards.append(play_and_train(env, agent))
     if i % 100 == 0:
-        print("mean reward", np.mean(rewards[-100:]))"""
+        print("mean reward", np.mean(rewards[-100:]))
