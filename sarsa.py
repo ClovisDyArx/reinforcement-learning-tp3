@@ -47,6 +47,7 @@ class SarsaAgent:
         """
         value = 0.0
         # BEGIN SOLUTION
+        value = max([self.get_qvalue(state, action) for action in self.legal_actions])
         # END SOLUTION
         return value
 
@@ -61,6 +62,9 @@ class SarsaAgent:
         """
         q_value = 0.0
         # BEGIN SOLUTION
+        TD_target = reward + self.gamma * self.get_value(next_state)
+        TD_error = TD_target - self.get_qvalue(state, action)
+        q_value = self.get_qvalue(state, action) + self.learning_rate * TD_error
         # END SOLUTION
 
         self.set_qvalue(state, action, q_value)
@@ -83,6 +87,7 @@ class SarsaAgent:
         action = self.legal_actions[0]
 
         # BEGIN SOLUTION
+        # TODO: Implement the epsilon-greedy policy (maybe ? idk...)
         # END SOLUTION
 
         return action
