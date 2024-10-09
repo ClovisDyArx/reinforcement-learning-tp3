@@ -15,6 +15,7 @@ class SarsaAgent:
     def __init__(
         self,
         learning_rate: float,
+        epsilon: float,
         gamma: float,
         legal_actions: t.List[Action],
     ):
@@ -26,6 +27,7 @@ class SarsaAgent:
         self.legal_actions = legal_actions
         self._qvalues: QValues = defaultdict(lambda: defaultdict(int))
         self.learning_rate = learning_rate
+        self.epsilon = epsilon
         self.gamma = gamma
 
     def get_qvalue(self, state: State, action: Action) -> float:
@@ -52,7 +54,7 @@ class SarsaAgent:
         return value
 
     def update(
-        self, state: State, action: Action, reward: t.SupportsFloat, next_state: State
+        self, state: State, action: Action, reward: t.SupportsFloat, next_state: State, next_action: Action
     ):
         """
         You should do your Q-Value update here (s'=next_state):
@@ -62,7 +64,7 @@ class SarsaAgent:
         """
         q_value = 0.0
         # BEGIN SOLUTION
-        TD_target = reward + self.gamma * self.get_value(next_state)
+        TD_target = reward + self.gamma * self.get_qvalue(next_state, next_action)
         TD_error = TD_target - self.get_qvalue(state, action)
         q_value = self.get_qvalue(state, action) + self.learning_rate * TD_error
         # END SOLUTION
@@ -88,6 +90,12 @@ class SarsaAgent:
 
         # BEGIN SOLUTION
         # TODO: Implement the epsilon-greedy policy (maybe ? idk...)
+        
+        if random.uniform(0, 1) < self.epsilon:
+            action = random.choice(self.legal_actions)
+        else:
+            action = self.get_best_action(state)
+
         # END SOLUTION
 
         return action
